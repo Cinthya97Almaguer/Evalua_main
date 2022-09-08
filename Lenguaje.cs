@@ -6,6 +6,10 @@ using System.Collections.Generic;
                     -si la variable no existe declarar que no existe
   Requerimiento 3.- Modificar el valor de la variable en la asignacion en el metodo de
                     asiganacion.
+  Requerimiento 4.- Obtener el valor de la variable cuando se requiera y programar el metodo
+                    getValor.
+  Requerimiento 5.- Modificar el valor de la variable en el Scanf.
+
 */
 namespace Evalua
 {
@@ -32,6 +36,8 @@ namespace Evalua
         }
         private void displayVariables( )
         {
+            log.WriteLine();
+            log.WriteLine("Variables: ");
             foreach (Variable v in variables)
             {
                 log.WriteLine(v.getNombre() + " " + v.getTipoDato() + " " + v.getValor());
@@ -48,11 +54,21 @@ namespace Evalua
             return false;
         }
 
+        //modificavariable
         private void modVariable (string nombre, float nuevoValor)
         {
             //SE GENERA CON UN FOREACH 
         }
 
+        private float getValor (string nombreVariable)
+        {
+            //PARA BUSCAR VARIABLE
+            /*foreach (Variable v in variables)
+            {
+            }*/
+            //EN CASO DE NO ENCONTRAR LA VARIABLE
+            return 0;
+        }
         //Programa  -> Librerias? Variables? Main
         public void Programa()
         {
@@ -268,14 +284,22 @@ namespace Evalua
         private void Incremento()
         {
             // REQUERIMIENTO 2 SI NO EXISTE LA VARIABLE SE LEVANTA LA EXCEPCION
+            //GUARDAR EL VALOR DE LA VARIABELS
+            string variable = getContenido();
             match(Tipos.Identificador);
             if(getContenido() == "+")
             {
+                //REQUERIMIENTO 4 - OBTENER EL VALOS DE LA VARIABLE INCREMENTAR UNO 
+                //Y VOLVER A METER EL NUEVO VALOR
                 match("++");
+                //                    LEO EL VALOR DE LA VARIABLE Y LE SUMO 1  
+                modVariable(variable, getValor(variable)+1);
             }
             else
             {
+                //LO MISMO DE ARRIBA PERO CON -1
                 match("--");
+                modVariable(variable, getValor(variable)-1);
             }
         }
 
@@ -285,6 +309,7 @@ namespace Evalua
             match("switch");
             match("(");
             Expresion();
+            stack.Pop(); //NO SE LE ASIGAN A NADA Y SE PIERDE EL VALOR
             match(")");
             match("{");
             ListaDeCasos();
@@ -309,6 +334,7 @@ namespace Evalua
         {
             match("case");
             Expresion();
+            stack.Pop();
             match(":");
             ListaInstruccionesCase();
             if(getContenido() == "break")
@@ -326,6 +352,7 @@ namespace Evalua
         private void Condicion()
         {
             Expresion();
+            stack.Pop();
             match(Tipos.OperadorRelacional);
             Expresion();
         }
@@ -359,23 +386,41 @@ namespace Evalua
             }
         }
 
-        //Printf -> printf(cadena);
+        //Printf -> printf(cadena o expreción);
         private void Printf()
         {
             match("printf");
             match("(");
-            Console.Write(getContenido());
-            match(Tipos.Cadena);
+            if (getClasificacion() == Tipos.Cadena)
+            {
+                //REQUERIMIENTO 1
+                Console.Write(getContenido());
+                match(Tipos.Cadena);
+            }
+            //SI NO ES CADENA ES EXPRECIÓN
+            else
+            {
+                Expresion();
+                Console.Write(stack.Pop());
+            }
             match(")");
             match(";");
         }
 
-        //Scanf -> scanf(cadena);
+        //Scanf -> scanf(cadena,&identificador);
         private void Scanf()    
         {
             match("scanf");
             match("(");
             match(Tipos.Cadena);
+            match(",");
+            match("&");
+            //REQUERIMIENTO 2
+            string val = ""+Console.ReadLine();
+            //REQUERIMIENTO 5
+            //YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
+            match(Tipos.Identificador);
+            
             match(")");
             match(";");
         }
@@ -459,6 +504,9 @@ namespace Evalua
             else if (getClasificacion() == Tipos.Identificador)
             {
                 // REQUERIMIENTO 2 SI NO EXISTE LA VARIABLE SE LEVANTA LA EXCEPCION
+                log.Write(getContenido() + " ");
+                //BUSCA EL CONTENIDO Y LO BUSCA
+                stack.Push(getValor(getContenido())); //POP PARA METER NUMERO
                 match(Tipos.Identificador);
             }
             else

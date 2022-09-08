@@ -1,14 +1,13 @@
 Primer constructor
 Archivo: prueba.cpp
-06/09/2022 09:35:02 a. m.
+08/09/2022 09:34:48 a. m.
 
-a = 3 5 + 8 * 10 4 - 2 / - = 61
+pi = 3.14159265358979323846 = 3.1415927
+
+area = pi radio radio * * = 0
+area 
+Variables: 
 resultado Float 0
-a Int 0
-b Int 0
-c Int 0
-d Int 0
-opcion Char 0
+area Float 0
 radio Float 0
-altura Float 0
-x Float 0
+pi Float 0

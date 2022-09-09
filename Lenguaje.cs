@@ -232,7 +232,7 @@ namespace Evalua
             match("(");
             Condicion();
             match(")");
-             if (getContenido() == "{") 
+            if (getContenido() == "{") 
             {
                 BloqueInstrucciones();
             }
@@ -393,8 +393,15 @@ namespace Evalua
             match("(");
             if (getClasificacion() == Tipos.Cadena)
             {
-                //REQUERIMIENTO 1
-                Console.Write(getContenido());
+                //REQUERIMIENTO 1 ELIMINAR COMILLAS DOBLES
+                /*String.Replace(x, y) se utiliza para reemplazar
+                todas las apariciones de la cadena x con la cadena y */
+                if (getContenido() == "\"")
+                {
+                    //
+                }
+                Console.Write(getContenido().Replace("\"", ""));
+                
                 match(Tipos.Cadena);
             }
             //SI NO ES CADENA ES EXPRECIÓN
@@ -420,7 +427,6 @@ namespace Evalua
             //REQUERIMIENTO 5
             //YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
             match(Tipos.Identificador);
-            
             match(")");
             match(";");
         }

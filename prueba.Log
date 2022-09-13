@@ -1,10 +1,19 @@
 Primer constructor
 Archivo: prueba.cpp
-12/09/2022 10:00:12 a. m.
+13/09/2022 09:48:46 a. m.
 
 pi = 3.141592653589793 = 3.1415927
 
 d = 4 = 4
 
-area = 
-Error la variable <area> en linea: 13
+area = pi radio radio * * = 3.1415927
+area 
+d = 10 = 10
+d 20 
+Variables: 
+area Float 3.1415927
+radio Float 1
+pi Float 3.1415927
+resultado Float 0
+a Int 0
+d Int 11

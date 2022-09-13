@@ -73,14 +73,10 @@ namespace Evalua
             {
                 if (v.getNombre() == nombreVariable)
                 {
-                    
+                    return v.getValor();
                 }
             }
             //EN CASO DE NO ENCONTRAR LA VARIABLE
-            /*if (!existe)
-            {
-                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
-            }*/
             return 0;
         }
         //Programa  -> Librerias? Variables? Main
@@ -226,13 +222,12 @@ namespace Evalua
             log.WriteLine();
             log.Write(getContenido()+" = ");
             string nombreVariable = getContenido();
-            bool existe = existeVariable(nombreVariable);
-            if (!existe)
+            //DEBE DE EXISTIR LA VARIABLE SI NO SE LEVNATA LA EXCEPCION
+            if (!existeVariable(nombreVariable))
             {
                 throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
             }
             match(Tipos.Identificador);             
-            //DEBE DE EXISTIR LA VARIABLE SI NO SE LEVNATA LA EXCEPCION
             match(Tipos.Asignacion);
             //SE ELIMINO EL IF PORQUE NO EXISTE EL TIPO DE DATO CADENA
             Expresion();
@@ -307,8 +302,7 @@ namespace Evalua
             //GUARDAR EL VALOR DE LA VARIABELS
             string variable = getContenido();
             //string nombreVariable = getContenido();
-            bool existe = existeVariable(variable);
-            if (!existe)
+            if (!existeVariable(variable))
             {
                 throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
             }
@@ -448,14 +442,14 @@ namespace Evalua
             match("&");
             //REQUERIMIENTO 2
             string nombreVariable = getContenido();
-            bool existe = existeVariable(nombreVariable);
-            if (!existe)
+            if (!existeVariable(nombreVariable))
             {
                 throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
             }
             string val = ""+Console.ReadLine();
-            //REQUERIMIENTO 5
-            //YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
+            //REQUERIMIENTO 5 - YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
+            float valf = Convert.ToSingle(val);
+            modVariable(nombreVariable, (valf));
             match(Tipos.Identificador);
             match(")");
             match(";");
@@ -541,8 +535,7 @@ namespace Evalua
             {
                 // REQUERIMIENTO 2 SI NO EXISTE LA VARIABLE SE LEVANTA LA EXCEPCION
                 string nombreVariable = getContenido();
-                bool existe = existeVariable(nombreVariable);
-                if (!existe)
+                if (!existeVariable(nombreVariable))
                 {
                     throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
                 }

@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 /*Requerimiento 1.- Eliminar las dobles comillas del printf e interpretar las secuencias
                     dentro de la cadena
-  Requetimiento 2.- Marcar los errores sintancticos cuando la variable no exista
+  Requerimiento 2.- Marcar los errores sintancticos cuando la variable no exista
                     -si la variable no existe declarar que no existe
   Requerimiento 3.- Modificar el valor de la variable en la asignacion en el metodo de
                     asiganacion.
   Requerimiento 4.- Obtener el valor de la variable cuando se requiera y programar el metodo
                     getValor.
   Requerimiento 5.- Modificar el valor de la variable en el Scanf.
-
 */
 namespace Evalua
 {
@@ -58,15 +57,30 @@ namespace Evalua
         private void modVariable (string nombre, float nuevoValor)
         {
             //SE GENERA CON UN FOREACH 
+            foreach (Variable v in variables)
+            {
+                if (v.getNombre().Equals(nombre))
+                {
+                    v.setValor(nuevoValor);
+                }
+            }
         }
 
         private float getValor (string nombreVariable)
         {
             //PARA BUSCAR VARIABLE
-            /*foreach (Variable v in variables)
+            foreach (Variable v in variables)
             {
-            }*/
+                if (v.getNombre() == nombreVariable)
+                {
+                    
+                }
+            }
             //EN CASO DE NO ENCONTRAR LA VARIABLE
+            /*if (!existe)
+            {
+                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+            }*/
             return 0;
         }
         //Programa  -> Librerias? Variables? Main
@@ -207,10 +221,16 @@ namespace Evalua
         //Asignacion -> identificador = cadena | Expresion;
         private void Asignacion()
         {
-            //REQUERIMIENTO 2-(SI NO EXISTE LA VARIABLE(GETCONTENIDO) SE LEVANTA LA EXCEPCION) Y TERMINA EL PROGRAMA
+            //REQUERIMIENTO 2-(SI NO EXISTE LA VARIABLE(GETCONTENIDO) 
+            //SE LEVANTA LA EXCEPCION) Y TERMINA EL PROGRAMA
             log.WriteLine();
             log.Write(getContenido()+" = ");
             string nombreVariable = getContenido();
+            bool existe = existeVariable(nombreVariable);
+            if (!existe)
+            {
+                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+            }
             match(Tipos.Identificador);             
             //DEBE DE EXISTIR LA VARIABLE SI NO SE LEVNATA LA EXCEPCION
             match(Tipos.Asignacion);
@@ -286,8 +306,14 @@ namespace Evalua
             // REQUERIMIENTO 2 SI NO EXISTE LA VARIABLE SE LEVANTA LA EXCEPCION
             //GUARDAR EL VALOR DE LA VARIABELS
             string variable = getContenido();
+            //string nombreVariable = getContenido();
+            bool existe = existeVariable(variable);
+            if (!existe)
+            {
+                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+            }
             match(Tipos.Identificador);
-            if(getContenido() == "+")
+            if(getContenido() == "++")
             {
                 //REQUERIMIENTO 4 - OBTENER EL VALOS DE LA VARIABLE INCREMENTAR UNO 
                 //Y VOLVER A METER EL NUEVO VALOR
@@ -396,12 +422,10 @@ namespace Evalua
                 //REQUERIMIENTO 1 ELIMINAR COMILLAS DOBLES
                 /*String.Replace(x, y) se utiliza para reemplazar
                 todas las apariciones de la cadena x con la cadena y */
-                if (getContenido() == "\"")
-                {
-                    //
-                }
-                Console.Write(getContenido().Replace("\"", ""));
-                
+                setContenido(getContenido().Replace("\"", ""));
+                setContenido(getContenido().Replace("\\n","\n"));
+                setContenido(getContenido().Replace("\\t","\t"));
+                Console.Write(getContenido());
                 match(Tipos.Cadena);
             }
             //SI NO ES CADENA ES EXPRECIÓN
@@ -423,6 +447,12 @@ namespace Evalua
             match(",");
             match("&");
             //REQUERIMIENTO 2
+            string nombreVariable = getContenido();
+            bool existe = existeVariable(nombreVariable);
+            if (!existe)
+            {
+                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+            }
             string val = ""+Console.ReadLine();
             //REQUERIMIENTO 5
             //YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
@@ -510,6 +540,12 @@ namespace Evalua
             else if (getClasificacion() == Tipos.Identificador)
             {
                 // REQUERIMIENTO 2 SI NO EXISTE LA VARIABLE SE LEVANTA LA EXCEPCION
+                string nombreVariable = getContenido();
+                bool existe = existeVariable(nombreVariable);
+                if (!existe)
+                {
+                    throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+                }
                 log.Write(getContenido() + " ");
                 //BUSCA EL CONTENIDO Y LO BUSCA
                 stack.Push(getValor(getContenido())); //POP PARA METER NUMERO

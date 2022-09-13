@@ -13,8 +13,8 @@ void main(){
     area = pi * (radio * radio);
     printf("\nArea = ");
     printf(area);
-    printf("Hola");
-
+    printf("\tHola");
+    
     for(d = 10; d<20; d++) {
     }
 }

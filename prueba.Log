@@ -1,12 +1,10 @@
 Primer constructor
 Archivo: prueba.cpp
-09/09/2022 09:41:57 a. m.
+12/09/2022 10:00:12 a. m.
 
 pi = 3.141592653589793 = 3.1415927
 
 d = 4 = 4
 
-area = pi radio radio * * = 0
-area 
-d = 10 = 10
-d 20 Error de sintaxis, se espera un -- en linea: 18
+area = 
+Error la variable <area> en linea: 13

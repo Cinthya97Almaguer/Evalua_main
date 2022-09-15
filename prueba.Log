@@ -1,18 +1,18 @@
 Primer constructor
 Archivo: prueba.cpp
-13/09/2022 09:48:46 a. m.
+14/09/2022 07:44:10 p. m.
 
 pi = 3.141592653589793 = 3.1415927
 
 d = 4 = 4
 
-area = pi radio radio * * = 3.1415927
+area = pi radio radio * * = 28.274334
 area 
 d = 10 = 10
 d 20 
 Variables: 
-area Float 3.1415927
-radio Float 1
+area Float 28.274334
+radio Float 3
 pi Float 3.1415927
 resultado Float 0
 a Int 0

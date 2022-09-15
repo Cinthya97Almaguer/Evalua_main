@@ -225,7 +225,7 @@ namespace Evalua
             //DEBE DE EXISTIR LA VARIABLE SI NO SE LEVNATA LA EXCEPCION
             if (!existeVariable(nombreVariable))
             {
-                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+                throw new Error("\nError la variable <" + getContenido() +"> no existe en linea: "+linea, log);
             }
             match(Tipos.Identificador);             
             match(Tipos.Asignacion);
@@ -304,7 +304,7 @@ namespace Evalua
             //string nombreVariable = getContenido();
             if (!existeVariable(variable))
             {
-                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+                throw new Error("\nError la variable <" + getContenido() +"> no existe en linea: "+linea, log);
             }
             match(Tipos.Identificador);
             if(getContenido() == "++")
@@ -444,10 +444,11 @@ namespace Evalua
             string nombreVariable = getContenido();
             if (!existeVariable(nombreVariable))
             {
-                throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+                throw new Error("\nError la variable <" + getContenido() +"> no existe en linea: "+linea, log);
             }
             string val = ""+Console.ReadLine();
             //REQUERIMIENTO 5 - YA SE CAPTURO EL STRING DEL VALOR HAY QUE CONVERTIR A FLOAT
+            //YA SE COMPROBO QUE SI EXISTE
             float valf = Convert.ToSingle(val);
             modVariable(nombreVariable, (valf));
             match(Tipos.Identificador);
@@ -537,7 +538,7 @@ namespace Evalua
                 string nombreVariable = getContenido();
                 if (!existeVariable(nombreVariable))
                 {
-                    throw new Error("\nError la variable <" + getContenido() +"> en linea: "+linea, log);
+                    throw new Error("\nError la variable <" + getContenido() +"> no existe en linea: "+linea, log);
                 }
                 log.Write(getContenido() + " ");
                 //BUSCA EL CONTENIDO Y LO BUSCA
